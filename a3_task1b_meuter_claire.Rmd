@@ -21,10 +21,8 @@ For task 1, I will be exploring patterns within a data set on vegetation samples
 
 ![**Figure A:** Photo of patch with acidophilous grassland (Valdíkov, Třebíč district, Czech Republic). Photo credit: D. Zelený.](grassland-photo.jpg)
 
-This data set and additional background information can be accessed at: https://www.davidzeleny.net/anadat-r/doku.php/en:data:grasslands
+**Source:** Reference: Zelený D. & Li Ch.-F. (2008): Vegetace suchých acidofilních trávníků v oblasti třebíčského žulosyenitového plutonu [Dry acidophilous grassland vegetation in the area of Třebíč's granosyenite pluton] - Acta Rerum Naturalium, 5: 177-194 pdf https://www.davidzeleny.net/anadat-r/doku.php/en:data:grasslands
 
-
-Reference: Zelený D. & Li Ch.-F. (2008): Vegetace suchých acidofilních trávníků v oblasti třebíčského žulosyenitového plutonu [Dry acidophilous grassland vegetation in the area of Třebíč's granosyenite pluton] - Acta Rerum Naturalium, 5: 177-194 pdf
 
 I will be exploring this data using a Principal components analysis (PCA). What is a PCA? A PCA reprojects original axes in a data set to new principal components that capture the greatest amount of variance in a multivariate data set. PCA results can be visualized as biplots and screeplots. 
 
