@@ -1,0 +1,61 @@
+---
+title: "Task 1: Principal Component Analysis"
+author: "Claire Meuter"
+date: "2023-03-03"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=TRUE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse) #all hail the tidyverse
+library(here) #easy reading
+library(ggfortify) # biplot creation
+```
+
+# Introduction
+For task 1, I will be exploring pattern within a data set on environmental and climatic variables (at a country-level). This data was compiled and provided by @zander_venter on Kaggle, described as: “This data is all acquired through Google Earth Engine (https://earthengine.google.com/) where publicly available remote sensing datasets have been uploaded...Most of the data is derived by calculating the mean for each country at a reduction scale of about 10km.”
+
+I will be exploring this data using a Principal components analysis (PCA). What is a PCA? A PCA reprojects original axes in a data set to new principal components that capture the greatest amount of variance in a multivariate data set. PCA results can be visualized as biplots and screeplots. 
+
+# Data wrangling 
+To prepare my data for a PCA, will drop categorical and character data, and exclude any rows with NAs. I should also rescale so all numeric variables have a mean 0 and sd 1.
+
+First, I read in my data and drop rows with NAs, and drop categorical and character data. Then, I'll rescale all of my numeric variables to have a mean of 0 and a standard dev of 1.
+```{r}
+#reading in my data set
+world_data <- read_csv(here("data", "world_env_vars.csv")) %>%
+  drop_na() %>% #dropping any rows containing NAs
+  dplyr::select(where(is.numeric)) %>% #keeping only numeric columns
+  dplyr::select(-aspect, -slope) %>% # there's a lot of variables here. I'm going to drop some that I just don't think are very informative 
+  dplyr::select(-starts_with(c('rain','temp')))# I'm dropping all the rain ones 
+
+world_pca <- world_data %>%  
+  scale() %>% #putting all my variable #s on a similar scale 
+  prcomp() # creating PCA
+
+
+# A little data exploration first: 
+#unique(world_vars$Country) #this wont work once I've selected for numeric variables only 
+```
+# See the loadings (weighting for each principal component)
+
+```{r}
+world_pca$rotation
+```
+
+# Visualize PCAs 
+Now that my PCAs, I have a few options on how to display this data. I can create biplot loadings by hand, or I can just use autoplot(). Autoplot is faster, and I'm a busy grad student, so that'll be my choice. 
+
+Here, I create a biplot to look at the PCA results in a two-dimension format
+```{r}
+autoplot(world_pca, 
+         data = world_data,
+         loadings = TRUE,
+         loadings.label = TRUE,
+         loading.colour = "black",
+         loadings.label.colour = "black") +
+  theme_minimal()
+```
+
